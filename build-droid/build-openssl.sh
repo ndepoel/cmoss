@@ -36,6 +36,25 @@ fi
 rm -rf "openssl-${OPENSSL_VERSION}"
 tar xvf "openssl-${OPENSSL_VERSION}.tar.gz"
 
+# Patch pod errors in openssl doc
+sed -i 's/item 0/item C<0>/g' openssl-${OPENSSL_VERSION}/doc/**/*.pod
+sed -i 's/item 1/item C<1>/g' openssl-${OPENSSL_VERSION}/doc/**/*.pod
+sed -i 's/item 2/item C<2>/g' openssl-${OPENSSL_VERSION}/doc/**/*.pod
+sed -i 's/item 3/item C<3>/g' openssl-${OPENSSL_VERSION}/doc/**/*.pod
+sed -i 's/item 4/item C<4>/g' openssl-${OPENSSL_VERSION}/doc/**/*.pod
+sed -i 's/item 5/item C<5>/g' openssl-${OPENSSL_VERSION}/doc/**/*.pod
+sed -i 's/item 6/item C<6>/g' openssl-${OPENSSL_VERSION}/doc/**/*.pod
+sed -i 's/item 7/item C<7>/g' openssl-${OPENSSL_VERSION}/doc/**/*.pod
+sed -i '/=head1 NOTES/i\
+=back\n
+' openssl-${OPENSSL_VERSION}/doc/crypto/X509_STORE_CTX_get_error.pod
+sed -i '/=item > 0/i\
+=over\n
+' openssl-${OPENSSL_VERSION}/doc/ssl/SSL_CTX_use_psk_identity_hint.pod
+sed -i '/=cut/i\
+=back\n
+' openssl-${OPENSSL_VERSION}/doc/ssl/SSL_CTX_use_psk_identity_hint.pod
+
 # Build
 pushd "openssl-${OPENSSL_VERSION}"
 
