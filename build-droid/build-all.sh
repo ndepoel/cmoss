@@ -35,15 +35,15 @@ export BZIP2_VERSION="1.0.6"
 export LIBIDN_VERSION="1.26"
 
 # GNU Crypto libraries
-export LIBGPG_ERROR_VERSION="1.10"
-export LIBGCRYPT_VERSION="1.5.0"
-export GNUPG_VERSION="1.4.13"
+export LIBGPG_ERROR_VERSION="1.12"
+export LIBGCRYPT_VERSION="1.6.1"
+export GNUPG_VERSION="1.4.16"
 
 # Project versions to use to build openssl (changing this may break the build)
-export OPENSSL_VERSION="1.0.1"
+export OPENSSL_VERSION="1.0.1f"
 
 # Project versions to use to build libssh2 and cURL (changing this may break the build)
-export LIBSSH2_VERSION="1.3.0"
+export LIBSSH2_VERSION="1.4.3"
 export CURL_VERSION="7.28.1"
 
 # Project Version to use to build libgsasl
