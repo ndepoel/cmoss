@@ -52,7 +52,7 @@ export LDFLAGS="-Os -fpic -Wl,-rpath-link=${SYSROOT}/usr/lib -L${SYSROOT}/usr/li
 export CFLAGS="-Os -pipe -isysroot ${SYSROOT} -I${ROOTDIR}/include"
 export CXXFLAGS="-Os -pipe -isysroot ${SYSROOT} -I${ROOTDIR}/include"
 
-./configure --host=${ARCH}-android-linux --target=${PLATFORM} --prefix=${ROOTDIR} --with-libz --with-libz-prefix=${ROOTDIR} --with-openssl --with-libssl-prefix=${ROOTDIR} --with-libgcrypt --with-libgcrypt-prefix=${ROOTDIR} --with-libssl-prefix=${ROOTDIR} CFLAGS="${CFLAGS}"
+./configure --host=${ARCH}-android-linux --target=${PLATFORM} --prefix=${ROOTDIR} --with-libz --with-libz-prefix=${ROOTDIR} --with-openssl --with-libssl-prefix=${ROOTDIR} --with-libgcrypt --with-libgcrypt-prefix=${ROOTDIR} CFLAGS="${CFLAGS}"
 
 # Fix libtool to not create versioned shared libraries
 mv "libtool" "libtool~"
