@@ -72,6 +72,9 @@ export SOCI_VERSION="3.1.0"
 # Project version to use to build pion (changing this may break the build)
 export PION_VERSION="master"
 
+# Project version to use to build libgit2
+export LIBGIT2_VERSION="development"
+
 # Create dist folder
 BUILDDIR=$(dirname $0)
 
@@ -192,6 +195,9 @@ do
 
 	# Build PION
 	#${TOPDIR}/build-droid/build-pion.sh > "${LOGPATH}-pion.log"
+
+	# Build libgit2
+	${TOPDIR}/build-droid/build-libgit2.sh > "${LOGPATH}-libgit2.log"
 
 	# Remove junk
 	rm -rf "${ROOTDIR}/bin"
