@@ -49,7 +49,7 @@ sed -i 's/item 7/item C<7>/g' openssl-${OPENSSL_VERSION}/doc/**/*.pod
 # Build
 pushd "openssl-${OPENSSL_VERSION}"
 
-DROID_GCC_LIBS=${TMPDIR}/droidtoolchains/${PLATFORM}/lib/gcc/arm-linux-androideabi/4.4.3
+DROID_GCC_LIBS=${TMPDIR}/droidtoolchains/${PLATFORM}/lib/gcc/${TOOLSPREFIX}/${TOOLCHAIN_VERSION}
 
 export CC=${DROIDTOOLS}-gcc
 export LD=${DROIDTOOLS}-ld

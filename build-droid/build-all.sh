@@ -40,7 +40,7 @@ export LIBGCRYPT_VERSION="1.6.1"
 export GNUPG_VERSION="1.4.16"
 
 # Project versions to use to build openssl (changing this may break the build)
-export OPENSSL_VERSION="1.0.1f"
+export OPENSSL_VERSION="1.0.1g"
 
 # Project versions to use to build libssh2 and cURL (changing this may break the build)
 export LIBSSH2_VERSION="1.4.3"
@@ -97,7 +97,7 @@ then
 fi
 
 # Platforms to build for (changing this may break the build)
-PLATFORMS="arm-linux-androideabi"
+PLATFORMS="arm-linux-androideabi x86"
 
 # Create tool chains for each supported platform
 for PLATFORM in ${PLATFORMS}
@@ -125,13 +125,15 @@ do
 	if [ "${PLATFORM}" == "arm-linux-androideabi" ]
 	then
 		export ARCH=${ARM_TARGET}
+		export TOOLSPREFIX=${PLATFORM}
 	else
 		export ARCH="x86"
+		export TOOLSPREFIX="i686-linux-android"
 	fi
 
 	export ROOTDIR=${ROOTDIR}
 	export PLATFORM=${PLATFORM}
-	export DROIDTOOLS=${TMPDIR}/droidtoolchains/${PLATFORM}/bin/${PLATFORM}
+	export DROIDTOOLS=${TMPDIR}/droidtoolchains/${PLATFORM}/bin/${TOOLSPREFIX}
 	export SYSROOT=${TMPDIR}/droidtoolchains/${PLATFORM}/sysroot
 
 	# Build minizip
@@ -202,25 +204,16 @@ do
 	rm -rf "${ROOTDIR}/share"
 	rm -rf "${ROOTDIR}/openssl.cnf"
 
+	# Copy headers to platform-specific include dir
+	mkdir -p ${BINDIR}/${ARCH}/include
+	cp -r ${TMPDIR}/build/droid/${PLATFORM}/include ${BINDIR}/${ARCH}/
+
+	# Copy libraries to platform-specific lib dir
+	mkdir -p ${BINDIR}/${ARCH}/lib
+	cp ${TMPDIR}/build/droid/${PLATFORM}/lib/*.a ${BINDIR}/${ARCH}/lib
+	cp ${TMPDIR}/build/droid/${PLATFORM}/lib/*.la ${BINDIR}/${ARCH}/lib
+	(cd ${TMPDIR}/build/droid/${PLATFORM}/lib && tar cf - *.so ) | ( cd ${BINDIR}/${ARCH}/lib && tar xfB - )
 done
-
-mkdir -p ${BINDIR}/include
-cp -r ${TMPDIR}/build/droid/arm-linux-androideabi/include ${BINDIR}/
-
-#mkdir -p ${BINDIR}/lib/x86
-mkdir -p ${BINDIR}/lib/${ARM_TARGET}
-
-#cp ${TMPDIR}/build/droid/i686-android-linux/lib/*.a ${BINDIR}/lib/x86
-#cp ${TMPDIR}/build/droid/i686-android-linux/lib/*.la ${BINDIR}/lib/x86
-
-#(cd ${TMPDIR}/build/droid/i686-android-linux/lib && tar cf - *.so ) | ( cd ${BINDIR}/lib/x86 && tar xfB - )
-#(cd ${TMPDIR}/build/droid/i686-android-linux/lib && tar cf - *.so.* ) | ( cd ${BINDIR}/lib/x86 && tar xfB - )
-
-cp ${TMPDIR}/build/droid/arm-linux-androideabi/lib/*.a ${BINDIR}/lib/${ARM_TARGET}
-cp ${TMPDIR}/build/droid/arm-linux-androideabi/lib/*.la ${BINDIR}/lib/${ARM_TARGET}
-
-(cd ${TMPDIR}/build/droid/arm-linux-androideabi/lib && tar cf - *.so ) | ( cd ${BINDIR}/lib/${ARM_TARGET} && tar xfB - )
-#(cd ${TMPDIR}/build/droid/arm-linux-androideabi/lib && tar cf - *.so.* ) | ( cd ${BINDIR}/lib/${ARM_TARGET} && tar xfB - )
 
 echo "**** Android c/c++ open source build completed ****"
 
