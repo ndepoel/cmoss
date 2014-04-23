@@ -18,6 +18,11 @@ else
 	export PROXY="-x $2"
 fi
 
+# Compilation options for libgit2
+LIBGIT2_WITH_SSL=true
+LIBGIT2_WITH_SSH=true
+LIBGIT2_LINK_DYNAMIC=true
+
 # Project version to use to build minizip (changing this may break the build)
 export MINIZIP_VERSION="11"
 
@@ -166,8 +171,11 @@ do
 	# Build OpenSSL
 	${TOPDIR}/build-droid/build-openssl.sh > "${LOGPATH}-OpenSSL.log"
 
-	# Build libssh2
-	${TOPDIR}/build-droid/build-libssh2.sh > "${LOGPATH}-libssh2.log"
+	if [ "$LIBGIT2_WITH_SSH" == "true" ];
+	then
+		# Build libssh2
+		${TOPDIR}/build-droid/build-libssh2.sh > "${LOGPATH}-libssh2.log"
+	fi
 
 	# Build cURL
 	#${TOPDIR}/build-droid/build-cURL.sh > "${LOGPATH}-cURL.log"
@@ -195,6 +203,19 @@ do
 
 	# Build PION
 	#${TOPDIR}/build-droid/build-pion.sh > "${LOGPATH}-pion.log"
+
+	# Make the previously built libraries available to libgit2
+	if [ "$LIBGIT2_WITH_SSL" == "true" ];
+	then
+		cp -r ${ROOTDIR}/include ${SYSROOT}/usr/
+
+		cp ${ROOTDIR}/lib/*.a ${SYSROOT}/usr/lib
+		cp ${ROOTDIR}/lib/*.la ${SYSROOT}/usr/lib
+		if [ "$LIBGIT2_LINK_DYNAMIC" == "true" ];
+		then
+			(cd ${ROOTDIR}/lib && tar cf - *.so ) | ( cd ${SYSROOT}/usr/lib && tar xfB - )
+		fi
+	fi
 
 	# Build libgit2
 	${TOPDIR}/build-droid/build-libgit2.sh > "${LOGPATH}-libgit2.log"
