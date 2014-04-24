@@ -20,8 +20,8 @@ fi
 
 # Compilation options for libgit2
 LIBGIT2_WITH_SSL=true
-LIBGIT2_WITH_SSH=true
-LIBGIT2_LINK_DYNAMIC=true
+LIBGIT2_WITH_SSH=false
+LIBGIT2_LINK_DYNAMIC=false
 
 # Project version to use to build minizip (changing this may break the build)
 export MINIZIP_VERSION="11"
