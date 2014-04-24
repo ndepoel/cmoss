@@ -1,8 +1,24 @@
 NOTE:
-I created this branch to have a version of CMOSS that builds the dependencies of libgit2 for Android.
-I added a patch, commented out libraries not needed by libgit2 and updated the libraries' versions.
+I created this fork to have a version of CMOSS that builds libgit2 for Android as well as its dependencies, for both ARM and x86 architectures.
 
 Tested with NDK r9c on Linux (x86_64).
+
+Required tools for building:
+
+* make
+* cmake
+* curl
+* Android NDK
+
+Run the following to build libgit2 for both ARM and x86:
+
+[cmoss root path]/build-droid/build-all.sh [path to Android NDK]
+
+The script build-all.sh contains three variables to control the feature set and linkage of libgit2:
+
+* LIBGIT2_WITH_SSL: compile libgit2 with OpenSSL support to allow communication over HTTPS.
+* LIBGIT2_WITH_SSH: compile libgit2 with libssh2 support to allow communication over SSH.
+* LIBGIT2_LINK_DYNAMIC: link libgit2 dynamically against its dependencies. Settings this to false will include all the dependencies inside the libgit2 library.
 
 -------------------------------------------------
 
