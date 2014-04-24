@@ -233,13 +233,13 @@ do
 
 	# Copy headers to platform-specific include dir
 	mkdir -p ${BINDIR}/${ARCH}/include
-	cp -r ${TMPDIR}/build/droid/${PLATFORM}/include ${BINDIR}/${ARCH}/
+	cp -r ${ROOTDIR}/include ${BINDIR}/${ARCH}/
 
 	# Copy libraries to platform-specific lib dir
 	mkdir -p ${BINDIR}/${ARCH}/lib
-	cp ${TMPDIR}/build/droid/${PLATFORM}/lib/*.a ${BINDIR}/${ARCH}/lib
-	cp ${TMPDIR}/build/droid/${PLATFORM}/lib/*.la ${BINDIR}/${ARCH}/lib
-	(cd ${TMPDIR}/build/droid/${PLATFORM}/lib && tar cf - *.so ) | ( cd ${BINDIR}/${ARCH}/lib && tar xfB - )
+	cp ${ROOTDIR}/lib/*.a ${BINDIR}/${ARCH}/lib
+	cp ${ROOTDIR}/lib/*.la ${BINDIR}/${ARCH}/lib
+	(cd ${ROOTDIR}/lib && tar cf - *.so ) | ( cd ${BINDIR}/${ARCH}/lib && tar xfB - )
 done
 
 echo "**** Android c/c++ open source build completed ****"
