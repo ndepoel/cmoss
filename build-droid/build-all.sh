@@ -78,7 +78,7 @@ export SOCI_VERSION="3.1.0"
 export PION_VERSION="master"
 
 # Project version to use to build libgit2
-export LIBGIT2_VERSION="development"
+export LIBGIT2_VERSION="c5cacc4ec2"
 
 # Create dist folder
 BUILDDIR=$(dirname $0)
